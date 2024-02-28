@@ -1,0 +1,8 @@
+argparse
+elasticsearch
+openai
+python-dotenv
+langchain
+langchain-community
+langchain-openai
+tiktoken
