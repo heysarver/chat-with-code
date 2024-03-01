@@ -6,3 +6,8 @@ langchain
 langchain-community
 langchain-openai
 tiktoken
+torch
+git+https://github.com/huggingface/transformers.git
+tqdm
+unstructured
+unstructured[md]
