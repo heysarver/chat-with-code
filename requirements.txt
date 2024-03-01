@@ -11,3 +11,4 @@ git+https://github.com/huggingface/transformers.git
 tqdm
 unstructured
 unstructured[md]
+GitPython
