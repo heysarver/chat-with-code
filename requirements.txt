@@ -10,5 +10,5 @@ torch
 git+https://github.com/huggingface/transformers.git
 tqdm
 unstructured
-unstructured[md]
+unstructured[all-docs]
 GitPython
