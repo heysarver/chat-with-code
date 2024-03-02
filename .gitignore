@@ -3,3 +3,5 @@ repos/*
 venv/
 .venv/
 .env
+data/*
+!data/.gitkeep
