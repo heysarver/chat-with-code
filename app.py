@@ -24,27 +24,28 @@ def parse_args():
 
     return args
 
-def clone_repo(repo_url, dest_folder, remove_dot_git=True):
-    Repo.clone_from(repo_url, dest_folder)
-    if remove_dot_git:
-        shutil.rmtree(f"{dest_folder}/.git")
+class App:
+    def __init__(self, args):
+        self.codebase_name = args.codebase_name if args.codebase_name != "local" else None
+        self.file_extensions = args.file_extensions.split(',')
+        self.source_dir = args.local_path if args.local_path else "data/source"
+        self.github_repo = args.github_repo
 
-def get_repo_name(repo_url):
-    return repo_url.split("/")[-1].replace(".git", "")
+        if self.github_repo:
+            self.clone_repo(self.github_repo, self.source_dir)
+            self.codebase_name = self.codebase_name or self.get_repo_name(self.github_repo)
+
+    @staticmethod
+    def clone_repo(repo_url, dest_folder, remove_dot_git=True):
+        Repo.clone_from(repo_url, dest_folder)
+        if remove_dot_git:
+            shutil.rmtree(f"{dest_folder}/.git")
+
+    @staticmethod
+    def get_repo_name(repo_url):
+        return repo_url.split("/")[-1].replace(".git", "")
 
 if __name__ == "__main__":
     args = parse_args()
-
-    # set varaibles
-    codebase_name = args.codebase_name
-    file_extensions = args.file_extensions.split(',')
-    source_dir = "data/source"
-    if args.github_repo:
-        clone_repo(args.github_repo, source_dir)
-        # only set to repo name if the codebase name is not set
-        if codebase_name == "local":
-            codebase_name = get_repo_name(args.github_repo)
-    if args.local_path:
-        source_dir = args.local_path
-    
+    app = App(args)
     
