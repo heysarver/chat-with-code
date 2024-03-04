@@ -29,6 +29,8 @@ def parse_args():
     SEARCH_RESULTS = os.getenv("SEARCH_RESULTS", 50)
     SEARCH_MATCH_PERCENTAGE = os.getenv("SEARCH_MATCH_PERCENTAGE", 0.8)
     SKIP_EMBEDDING = os.getenv("SKIP_EMBEDDING", False)
+    SKEW_PHRASE = os.getenv("SKEW_PHRASE", None)
+    SKEW_PHRASE_BOOST = os.getenv("SKEW_PHRASE_BOOST", 0.5)
 
     parser = argparse.ArgumentParser(description="Process some parameters.")
     parser.add_argument("--github-repo", type=str, default=GITHUB_REPO, help="GitHub repository URL")
@@ -51,6 +53,8 @@ def parse_args():
     parser.add_argument("--search-results", type=int, default=SEARCH_RESULTS, help="Number of search results")
     parser.add_argument("--search-match-percentage", type=float, default=SEARCH_MATCH_PERCENTAGE, help="Match percentage for search")
     parser.add_argument("--skip-embedding", type=bool, default=SKIP_EMBEDDING, help="Skip embedding")
+    parser.add_argument("--skew-phrase", type=str, default=SKEW_PHRASE, help="Skew phrase")
+    parser.add_argument("--skew-phrase-boost", type=float, default=SKEW_PHRASE_BOOST, help="Skew phrase boost")
 
     args = parser.parse_args()
     if args.github_repo != "" and args.local_path != "":
@@ -65,8 +69,9 @@ def print_search_results(search_result):
         text = source['text']
         metadata = source['metadata']
         score = hit['_score']
+        score = round((score / 2) * 100, 2)  # update score calculation
         print(f"Result {i}:")
-        print(f"Score: {score}")
+        print(f"Score: {score}%")  # print score as a percentage
         print(f"Metadata: {metadata}")
         print("\n")
 
@@ -76,5 +81,5 @@ if __name__ == "__main__":
     if not app.skip_embedding:
         app.create_documents(provider=args.embedding_provider, model=args.embedding_model)
         app.store_documents()
-    search_result = app.semantic_search(query = "generate sample code for create_transaction") # use the user's query OR use LLM to get keywords?
+    search_result = app.search(query = "generate sample code for create_transaction")
     print_search_results(search_result)

@@ -26,6 +26,8 @@ class App:
         self.search_results = args.search_results
         self.search_match_percentage = args.search_match_percentage
         self.skip_embedding = args.skip_embedding
+        self.skew_phrase = args.skew_phrase
+        self.skew_phrase_boost = args.skew_phrase_boost
         
         self.documents = None
 
@@ -83,10 +85,14 @@ class App:
             index = self.elasticsearch_index
         delete_es_index(self, index)
 
-    def semantic_search(self, query, index=None, size=None):
+    def search(self, query, index=None, size=None, skew_phrase=None, skew_phrase_boost=None):
         if not index:
             index = self.elasticsearch_index
         if not size:
             size = self.search_results
-        
-        return semantic_search(self, query, index, size)
+        if not skew_phrase:
+            skew_phrase = self.skew_phrase
+        if not skew_phrase_boost:
+            skew_phrase_boost = self.skew_phrase_boost
+
+        return semantic_search(self, query, index, size, skew_phrase, skew_phrase_boost)
