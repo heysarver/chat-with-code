@@ -1,6 +1,4 @@
 from app.app import App
-from elasticsearch import Elasticsearch
-from pprint import pprint
 
 import argparse
 import os

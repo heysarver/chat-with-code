@@ -1,9 +1,7 @@
 import os
 from utils.git_utils import clone_repo, get_repo_name
-from lib.embedding import embed_files, text_to_vector, load_model
+from lib.embedding import embed_files
 from lib.elasticsearch import store_documents, delete_es_index, semantic_search, get_es_object
-from transformers import AutoTokenizer, AutoModel
-from elasticsearch import Elasticsearch
 
 class App:
     def __init__(self, args):
