@@ -19,7 +19,11 @@ def load_text_files(src: str, delete_src_when_done: bool = False):
         clone_repo(repo_url, repo_name)
 
     docs = []
+    excluded_dirs = {".env", ".venv", "venv", ".git"}
     for dirpath, dirnames, filenames in os.walk(root_dir):
+        if any(excluded_dir in dirpath for excluded_dir in excluded_dirs) and not dirpath.endswith("example"):
+            continue
+
         for file in filenames:
             try:
                 loader = TextLoader(os.path.join(dirpath, file), encoding='utf-8')

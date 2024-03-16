@@ -6,9 +6,6 @@ def create_deeplake(texts: any, username: str, dataset_name: str, embeddings: an
 
     db = DeepLake(dataset_path=dataset_path, embedding=embeddings, overwrite=True)
 
-    for text in texts:
-        print(f"Adding document: {text}\n\n\n\n")
-
     db.add_documents(texts)
 
     return db
