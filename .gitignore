@@ -157,11 +157,7 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-repos/*
-!repos/.gitkeep
 venv/
 .venv/
 .env
-data/*
-!data/.gitkeep
 temp/*
