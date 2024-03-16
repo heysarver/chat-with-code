@@ -1,4 +1,3 @@
-# app/api/routes.py
 from flask import jsonify
 from . import api_blueprint
 

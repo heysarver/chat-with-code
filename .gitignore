@@ -160,4 +160,5 @@ cython_debug/
 venv/
 .venv/
 .env
-temp/*
+tmp/*
+data/*

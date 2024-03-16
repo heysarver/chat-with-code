@@ -16,7 +16,7 @@ The following environment variables need to be set in your `.env` file:
 | OPENAI_API_KEY | No* | API key for OpenAI. | sk-... |
 | ACTIVELOOP_TOKEN | Yes | JWT token for ActiveLoop. | JWT |
 | ACTIVELOOP_USERNAME | Yes | Username for ActiveLoop. | username |
-| GIT_REPO | Yes | URL of the Git repository to clone. | "https://github.com/username/repo" |
+| REPO_URL | Yes | URL of the Git repository to clone. | "https://github.com/username/repo" |
 | VECTORDB_NAME | Yes | Name of the Vector Database. | chat-with-files |
 | LLM_PROVIDER | Yes | Provider for the QA Chat. Can be either anthropic or openai. | anthropic |
 - *Keys are required for chosen providers.
