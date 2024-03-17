@@ -3,6 +3,8 @@ from dotenv import load_dotenv
 from flask import Flask
 from .api import api_blueprint
 from .cli import register_cli
+from .dashapp import create_dash_application
+
 
 def create_app():
     app = Flask(__name__)
@@ -19,4 +21,5 @@ def create_app():
     app.config['VECTORDB_NAME'] = os.environ.get('VECTORDB_NAME')
     app.register_blueprint(api_blueprint)
     register_cli(app)
+    create_dash_application(app)
     return app

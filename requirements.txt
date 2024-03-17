@@ -10,3 +10,4 @@ langchain-anthropic
 anthropic
 GitPython
 flask
+dash
