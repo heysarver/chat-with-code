@@ -1,0 +1,9 @@
+version: '3'
+services:
+  api:
+    build: .
+    ports:
+      - "5678:5000"
+    command: ["python", "run.py"]
+    volumes:
+      - .:/app
