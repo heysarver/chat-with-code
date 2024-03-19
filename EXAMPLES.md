@@ -142,7 +142,7 @@ for snapshot in net_liq_history:
 
 ### **Raw Output**
 
-```
+<pre>
 **Question**: How do I connect to a sandbox instance of the tastytrade api? 
 
 **Answer**: To connect to a sandbox (certification) instance of the Tastytrade API, you need to:
@@ -237,3 +237,4 @@ This script will:
 Note that the `get_net_liquidating_value_history` method accepts either a `time_back` parameter (e.g. `'1m'`, `'3m'`, `'1y'`) or a `start_time` parameter. In the example, we use `start_time` to specify the start date for the history. 
 
 ```
+</pre>
