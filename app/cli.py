@@ -3,8 +3,8 @@ from utils.embeddings import embeddings
 from loaders.text_loader import load_text_files
 from utils.text_processing import split_documents
 from utils.vectorstores import create_deeplake, load_deeplake
-from utils.chat import new_chat_model
-from utils.chains import new_crc_from_llm
+from utils.chat import chat
+from utils.chains import crc_from_llm
 
 def register_cli(app):
     @app.cli.command()
@@ -28,8 +28,8 @@ def register_cli(app):
 
         model_name = app.config['LLM_MODEL']
         llm_provider = app.config['LLM_PROVIDER']
-        model = new_chat_model(temperature=0.2, provider=llm_provider, model_name=model_name)
-        qa = new_crc_from_llm(model, retriever)
+        model = chat(temperature=0.2, provider=llm_provider, model_name=model_name)
+        qa = crc_from_llm(model, retriever)
 
         questions = questions.split('|')
 
