@@ -1,18 +1,10 @@
-import os
 from langchain_community.vectorstores import DeepLake
 
-def create_deeplake(texts: any, username: str, dataset_name: str, embeddings: any):
-    dataset_path = f"hub://{username}/{dataset_name}"
-
-    db = DeepLake(dataset_path=dataset_path, embedding=embeddings, overwrite=True)
-
-    db.add_documents(texts)
-
-    return db
-
-def load_deeplake(username: str, dataset_name: str, embeddings: any, read_only: bool = True):
-    dataset_path = f"hub://{username}/{dataset_name}"
-
-    db = DeepLake(dataset_path=dataset_path, read_only=True, embedding=embeddings)
-
+def get_deeplake(username: str, dataset_name: str, embeddings: any, local: bool = True, read_only: bool = False):
+    if local:
+        scheme = "./deeplake/"
+    else:
+        scheme = "hub://"
+    dataset_path = f"{scheme}{username}/{dataset_name}"
+    db = DeepLake(dataset_path=dataset_path, read_only=read_only, embedding=embeddings)
     return db

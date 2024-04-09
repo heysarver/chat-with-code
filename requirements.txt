@@ -1,12 +1,14 @@
 langchain-community
+langchain-anthropic
 langchain-openai
 langchain-voyageai
+langchain-text-splitters
+langchain
 deeplake
 openai
 tiktoken
 python-dotenv
 voyageai
-langchain-anthropic
 anthropic
 GitPython
 flask

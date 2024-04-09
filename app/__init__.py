@@ -22,6 +22,7 @@ def create_app():
     app.config['VECTORDB_HOST'] = os.getenv('VECTORDB_HOST', '')
     app.config['VECTORDB_PORT'] = os.getenv('VECTORDB_PORT', '')
     app.config['VECTORDB_PROVIDER'] = os.getenv('VECTORDB_PROVIDER', 'activeloop')
+    app.config['VECTORDB_REPLACE'] = os.getenv('VECTORDB_REPLACE', 'False')
     app.config['REPO_URL'] = os.getenv('REPO_URL', 'https://github.com/username/repo')
     app.register_blueprint(api_blueprint)
     register_cli(app)

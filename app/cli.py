@@ -2,25 +2,29 @@ import click
 from utils.embeddings import embeddings
 from loaders.text_loader import load_text_files
 from utils.text_processing import split_documents
-from utils.vectorstores import create_deeplake, load_deeplake
+from utils.vectorstores import get_deeplake
 from utils.chat import chat
 from utils.chains import crc_from_llm
 
 def register_cli(app):
-    @app.cli.command()
-    def load():
+    @app.cli.command("load")
+    @click.option('--repo_url', default=None, help='Override REPO_URL environment variable')
+    def load(repo_url):
+        if repo_url is not None:
+            app.config['REPO_URL'] = repo_url
         src = app.config['REPO_URL']
-        embs = embeddings()
-        docs = load_text_files(src, delete_src_when_done=False)
+        embs = embeddings(provider=app.config['EMBEDDING_PROVIDER'], model=app.config['EMBEDDING_MODEL'])
+        docs = load_text_files(src)
         texts = split_documents(docs)
-        db = create_deeplake(texts=texts, embeddings=embs, username=app.config['ACTIVELOOP_USERNAME'], dataset_name=app.config['VECTORDB_NAME'])
+        db = get_deeplake(username=app.config['ACTIVELOOP_USERNAME'], dataset_name=app.config['VECTORDB_NAME'], embeddings=embs, local=False)
+        db.add_documents(texts)
         return db
     
-    @app.cli.command()
+    @app.cli.command("query")
     @click.option('--questions', type=str)
     def query(questions):
-        embs = embeddings()
-        db = load_deeplake(username=app.config['ACTIVELOOP_USERNAME'], dataset_name=app.config['VECTORDB_NAME'], embeddings=embs)
+        embs = embeddings(provider=app.config['EMBEDDING_PROVIDER'], model=app.config['EMBEDDING_MODEL'])
+        db = get_deeplake(username=app.config['ACTIVELOOP_USERNAME'], dataset_name=app.config['VECTORDB_NAME'], embeddings=embs)
         retriever = db.as_retriever()
         retriever.search_kwargs['distance_metric'] = 'cos'
         retriever.search_kwargs['fetch_k'] = 100
