@@ -14,9 +14,9 @@ def load_text_files(src: str, delete_src_when_done: bool = False, category: str 
     else:
         repo_url = src
         repo_name = get_repo_name(repo_url)
-        root_dir = f"./{repo_name}"
+        root_dir = f"./source/{repo_name}"
         print(f"Cloning {repo_url}")
-        clone_repo(repo_url, repo_name)
+        clone_repo(repo_url, f"./source/{repo_name}")
 
     docs = []
     excluded_dirs = {".env", ".venv", "venv", ".git"}
