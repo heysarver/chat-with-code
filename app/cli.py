@@ -14,7 +14,7 @@ def register_cli(app):
             app.config['REPO_URL'] = repo_url
         src = app.config['REPO_URL']
         embs = embeddings(provider=app.config['EMBEDDING_PROVIDER'], model=app.config['EMBEDDING_MODEL'])
-        docs = load_text_files(src)
+        docs = load_text_files(src, category="default") # category to be used in the future
         texts = split_documents(docs)
         db = get_deeplake(username=app.config['ACTIVELOOP_USERNAME'], dataset_name=app.config['VECTORDB_NAME'], embeddings=embs, local=False)
         db.add_documents(texts)

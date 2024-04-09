@@ -161,4 +161,5 @@ venv/
 .venv/
 .env
 tmp/*
-data/*
+data/**/
+source/**/
