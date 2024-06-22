@@ -16,7 +16,7 @@ def register_cli(app):
         embs = embeddings(provider=app.config['EMBEDDING_PROVIDER'], model=app.config['EMBEDDING_MODEL'])
         docs = load_text_files(src, category="default") # category to be used in the future
         texts = split_documents(docs)
-        db = get_deeplake(username=app.config['ACTIVELOOP_USERNAME'], dataset_name=app.config['VECTORDB_NAME'], embeddings=embs, local=False)
+        db = get_deeplake(username=app.config['ACTIVELOOP_USERNAME'], dataset_name=app.config['VECTORDB_NAME'], embeddings=embs, local=True)
         db.add_documents(texts)
         return db
     
@@ -42,5 +42,5 @@ def register_cli(app):
         for question in questions:
             result = qa({"question": question, "chat_history": chat_history})
             chat_history.append((question, result['answer']))
-            print(f"**Question**: {question} \n")
-            print(f"**Answer**: {result['answer']} \n\n\n\n")
+            print(f"**Question**:\n{question}\n")
+            print(f"**Answer**:\n\n{result['answer']}\n\n")
